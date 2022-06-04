@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chinese Chess</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2.5rem;
+      font-family: '標楷體';
+    }
+
+    .flex-center {
+      display: flex;
+      justify-content: center;
+    }
+
+    #main {
+      margin: auto;
+    }
+
+    .word {
+      writing-mode: vertical-lr;
+      /* background: rgb(190, 55, 55); */
+      text-align: center;
+    }
+
+    #out {
+      width: 740px;
+      height: 820px;
+      border: 1px solid #000;
+      margin: 0 2rem;
+      position: relative;
+    }
+
+    #in {
+      width: 640px;
+      height: 720px;
+      display: flex;
+      flex-wrap: wrap;
+      align-self: center;
+    }
+
+    .row {
+      width: 640px;
+      height: 80px;
+      display: flex;
+    }
+
+    .col {
+      width: 80px;
+      height: 80px;
+      border-top: 1px solid #333;
+      border-left: 1px solid #333;
+    }
+
+    .row .col:last-child {
+      border-right: 1px solid #333;
+    }
+
+    .row:last-child .col {
+      border-bottom: 1px solid #333;
+    }
+
+    .row:nth-child(6) .col {
+      border-top: none;
+    }
+
+    .row:nth-child(5) {
+      justify-content: space-around;
+      align-items: center;
+      font-size: larger;
+    }
+
+    .row:nth-child(1) .col:nth-child(4)::after {
+      content: '';
+      background: #000;
+      width: 160px;
+      height: 1px;
+      position: absolute;
+      top: 130px;
+      transform: rotate(45deg) scale(1.4);
+    }
+
+    .row:nth-child(1) .col:nth-child(4)::before {
+      content: '';
+      background: #000;
+      width: 160px;
+      height: 1px;
+      position: absolute;
+      top: 130px;
+      transform: rotate(-45deg) scale(1.4);
+    }
+
+    .row:last-child .col:nth-child(4)::before {
+      content: '';
+      background: #000;
+      width: 160px;
+      height: 1px;
+      position: absolute;
+      top: 690px;
+      transform: rotate(-45deg) scale(1.4);
+    }
+
+    .row:last-child .col:nth-child(4)::after {
+      content: '';
+      background: #000;
+      width: 160px;
+      height: 1px;
+      position: absolute;
+      top: 690px;
+      transform: rotate(45deg) scale(1.4);
+    }
+
+    .round-in {
+      display: flex;
+      height: 409px;
+      width: 700px;
+      position: absolute;
+      /* background: rgba(255, 0, 0, 0.5); */
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px 0 15px;
+    }
+
+    .round-row {
+      display: flex;
+      /* background: rgba(0, 0, 0, 0.5); */
+      height: 60px;
+      width: 700px;
+      justify-content: space-between;
+    }
+
+    .reverse {
+      bottom: 0px;
+      flex-direction: column-reverse;
+      padding: 15px 0 20px;
+      color: red;
+    }
+
+    .round-col {
+      width: 60px;
+      height: 60px;
+      border: 1px solid #333;
+      background: #fff;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 60px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="main" class="flex-center">
+    <div class="word">棋盤裡，車無輪馬無韁，叫聲將軍提防提防</div>
+    <div id="out" class="flex-center">
+      <div id="in">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+        </div>
+        <div class="row">
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+        </div>
+        <div class="row">
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+        </div>
+        <div class="row">
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+        </div>
+        <div class="row" style="border: 1px solid #333;">
+          <span>楚河</span>
+          <span>漢界</span>
+        </div>
+        <div class="row">
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+        </div>
+        <div class="row">
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+        </div>
+        <div class="row">
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+        </div>
+        <div class="row">
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col"></div>
+        </div>
+
+      </div>
+      <div class="round-in">
+        <div class="round-row">
+          <div class="round-col">車</div>
+          <div class="round-col">馬</div>
+          <div class="round-col">象</div>
+          <div class="round-col">士</div>
+          <div class="round-col">將</div>
+          <div class="round-col">士</div>
+          <div class="round-col">象</div>
+          <div class="round-col">馬</div>
+          <div class="round-col">車</div>
+        </div>
+        <div class="round-row">
+        </div>
+        <div class="round-row" style="padding:0 80px">
+          <div class="round-col">包</div>
+          <div class="round-col">包</div>
+        </div>
+        <div class="round-row">
+          <div class="round-col">卒</div>
+          <div class="round-col">卒</div>
+          <div class="round-col">卒</div>
+          <div class="round-col">卒</div>
+          <div class="round-col">卒</div>
+        </div>
+        <div class="round-row"></div>
+      </div>
+      <div class="round-in reverse">
+        <div class="round-row">
+          <div class="round-col">俥</div>
+          <div class="round-col">傌</div>
+          <div class="round-col">相</div>
+          <div class="round-col">仕</div>
+          <div class="round-col">帥</div>
+          <div class="round-col">仕</div>
+          <div class="round-col">相</div>
+          <div class="round-col">傌</div>
+          <div class="round-col">俥</div>
+        </div>
+        <div class="round-row">
+        </div>
+        <div class="round-row" style="padding:0 80px">
+          <div class="round-col">炮</div>
+          <div class="round-col">炮</div>
+        </div>
+        <div class="round-row">
+          <div class="round-col">兵</div>
+          <div class="round-col">兵</div>
+          <div class="round-col">兵</div>
+          <div class="round-col">兵</div>
+          <div class="round-col">兵</div>
+        </div>
+        <div class="round-row"></div>
+      </div>
+    </div>
+    <div class="word">圖畫裡，龍不吟虎不嘯，小小書童可笑可笑</div>
+  </div>
+</body>
+
+</html>
